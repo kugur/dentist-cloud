@@ -1,0 +1,15 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: patient-auto
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespw
+    ports:
+      - "32769:5432"
+    volumes:
+      - patient-db:/var/lib/postgresql/data
+
+volumes:
+  patient-db:

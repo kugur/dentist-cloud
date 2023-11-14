@@ -1,0 +1,5 @@
+rootProject.name = 'dentist-cloud'
+include 'discovery-server'
+include 'patient-service'
+include 'api-gateway'
+
