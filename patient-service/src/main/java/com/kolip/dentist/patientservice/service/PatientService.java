@@ -1,5 +1,7 @@
 package com.kolip.dentist.patientservice.service;
 
-public class PatientService {
-    void create
+import com.kolip.dentist.patientservice.dto.PatientRequest;
+
+public interface PatientService {
+    void create(PatientRequest patientRequest);
 }
