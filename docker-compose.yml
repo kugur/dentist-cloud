@@ -10,6 +10,16 @@ services:
       - "32769:5432"
     volumes:
       - patient-db:/var/lib/postgresql/data
+  authentication-db:
+    image: postgres
+    environment:
+      POSTGRES_DB: authentication-auto
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespw
+    ports:
+      - "32768:5432"
+    volumes:
+      - authentication-db:/var/lib/postgresql/data
   zipkin:
     image: openzipkin/zipkin
     ports:
@@ -17,3 +27,4 @@ services:
 
 volumes:
   patient-db:
+  authentication-db:

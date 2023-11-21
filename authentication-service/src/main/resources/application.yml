@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: authentication-service
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: false
+        default_schema: dentist
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      dialect: org.hibernate.dialect.PostgreSQL95Dialect
+
+  datasource:
+    url: jdbc:postgresql://localhost:32768/authentication-auto?currentSchema=dentist
+    username: postgres
+    password: postgrespw
+
+server:
+  port: 0
+
+eureka:
+  client:
+  serviceUrl:
+    defaultZone: http://localhost:8761/eureka
+
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+
+jwt:
+  private:
+    key: classpath:app.key
+  public:
+    key: classpath:app.pub
+

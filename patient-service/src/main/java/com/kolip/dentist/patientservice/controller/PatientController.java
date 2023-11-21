@@ -2,9 +2,7 @@ package com.kolip.dentist.patientservice.controller;
 
 import com.kolip.dentist.patientservice.dto.PatientRequest;
 import com.kolip.dentist.patientservice.dto.PatientResponse;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

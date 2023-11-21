@@ -1,0 +1,8 @@
+# Disable DataSource auto-configuration
+spring:
+  datasource:
+    autoconfigure: false
+
+  # Disable JPA (Java Persistence API) auto-configuration
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration

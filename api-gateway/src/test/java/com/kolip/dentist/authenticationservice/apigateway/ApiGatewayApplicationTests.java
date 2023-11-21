@@ -1,4 +1,4 @@
-package com.kolip.dentist.apigateway;
+package com.kolip.dentist.authenticationservice.apigateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
