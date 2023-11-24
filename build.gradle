@@ -57,6 +57,19 @@ subprojects {
     }
 }
 
+// Exclude the dependency for a specific module
+project(':discovery-server') {
+    configurations.all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-devtools'
+        exclude group: 'io.micrometer', module: 'micrometer-tracing-bom'
+        exclude group: 'io.micrometer', module: 'micrometer-tracing'
+
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-actuator'
+        exclude group: 'io.micrometer', module: 'micrometer-tracing-bridge-brave'
+        exclude group: 'io.zipkin.reporter2', module: 'zipkin-reporter-brave'
+    }
+}
+
 
 group = 'com.kolip.dentist'
 version = '1.0-SNAPSHOT'

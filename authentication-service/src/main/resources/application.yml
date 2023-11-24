@@ -1,6 +1,17 @@
 spring:
   application:
     name: authentication-service
+  main:
+    allow-circular-references: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1059421510013-jooaqaedr94travhs9c03fb6foqvjoqt.apps.googleusercontent.com
+            client-secret: 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
+            redirectUri: http://localhost:8181/login/oauth2/code/{registrationId}
+
   jpa:
     generate-ddl: true
     properties:
@@ -18,7 +29,7 @@ spring:
     password: postgrespw
 
 server:
-  port: 0
+  port: 8585
 
 eureka:
   client:
@@ -40,4 +51,5 @@ jwt:
     key: classpath:app.key
   public:
     key: classpath:app.pub
+
 

@@ -61,6 +61,8 @@ public class RestConfig {
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec.pathMatchers("/api/token").permitAll())
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec.pathMatchers("api/token").permitAll())
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec.pathMatchers(HttpMethod.POST, "/api/user").permitAll())
+                .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec.pathMatchers( "/login/oauth2/code/google").permitAll())
+                .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec.pathMatchers( "/oauth2/authorization/google").permitAll())
                 .authorizeExchange(exchanges -> exchanges.anyExchange().authenticated())
                 .oauth2ResourceServer(oauth2ResConf -> oauth2ResConf.jwt(Customizer.withDefaults())).exceptionHandling(
                         (exceptions) -> exceptions.authenticationEntryPoint(new BearerTokenServerAuthenticationEntryPoint())

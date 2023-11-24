@@ -1,4 +1,4 @@
-package com.kolip.dentist.authenticationservice.discoveryserver;
+package com.kolip.dentist.discoveryserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

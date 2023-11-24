@@ -10,10 +10,12 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -49,7 +51,11 @@ public class CustomUserServiceImpl implements CustomUserService {
 
     @Override
     public CustomUser findByEmail(String username) {
-        return customUserRepository.findByEmail(username);
+        CustomUser user = customUserRepository.findByEmail(username);
+        if ("uur@gmail.com".equals(username)) {
+            user.setAuthorities(List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        }
+        return user;
     }
 
     private CustomUser convert(UserRequest userRequest) {
