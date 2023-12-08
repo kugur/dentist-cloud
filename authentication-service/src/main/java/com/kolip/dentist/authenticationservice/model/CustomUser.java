@@ -3,15 +3,15 @@ package com.kolip.dentist.authenticationservice.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class CustomUser implements UserDetails {
@@ -25,8 +25,45 @@ public class CustomUser implements UserDetails {
     @Column
     private String password;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
+
     @Transient
     private Collection<? extends GrantedAuthority> authorities;
+
+    public CustomUser() {
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+        this.authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    }
+
+    public void deleteRole(Role deletedRole) {
+        setRoles(roles.stream().filter(role -> role.getName().equals(deletedRole.getName())).collect(Collectors.toSet()));
+    }
+
+    public void addRole(Role addedRole) {
+        this.roles.add(addedRole);
+        setRoles(roles);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.authorities == null && this.roles != null) {
+            return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+        }
+        return this.authorities;
+    }
 
     public Long getId() {
         return id;
@@ -67,11 +104,6 @@ public class CustomUser implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
     public boolean isAccountNonExpired() {
         return true;
     }
@@ -90,4 +122,5 @@ public class CustomUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

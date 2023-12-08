@@ -4,6 +4,7 @@ import com.kolip.dentist.authenticationservice.dto.UserRequest;
 import com.kolip.dentist.authenticationservice.dto.UserResponse;
 import com.kolip.dentist.authenticationservice.model.CustomUser;
 import com.kolip.dentist.authenticationservice.repository.CustomUserRepository;
+import com.kolip.dentist.authenticationservice.repository.RoleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -24,10 +25,12 @@ class CustomUserServiceImplTest {
 
     @MockBean
     private CustomUserRepository customUserRepository;
+    @MockBean
+    private RoleRepository roleRepository;
 
     @BeforeEach
     public void setup() {
-        instanceUnderTest = new CustomUserServiceImpl(customUserRepository);
+        instanceUnderTest = new CustomUserServiceImpl(customUserRepository, roleRepository);
     }
 
     @Test

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.stream.Collectors;
 
+/**
+ * Create token for use by gate-way to verify the requested user.
+ */
 @Service
 public class CustomTokenService {
     JwtEncoder encoder;

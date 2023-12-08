@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Created by ugur.kolip on 30/11/2023.
+ *
+ */
 @RestController
 @RequestMapping("/api/token")
 public class JwtTokenController {
@@ -20,12 +24,5 @@ public class JwtTokenController {
     @PostMapping
     public String token(Authentication authentication) {
         return customTokenService.createToken(authentication);
-    }
-
-
-    @GetMapping
-    public String getToken() {
-
-        return "tokeni aldin tebrik";
     }
 }
