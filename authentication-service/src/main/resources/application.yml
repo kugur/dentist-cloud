@@ -20,7 +20,7 @@ spring:
         default_schema: dentist
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       dialect: org.hibernate.dialect.PostgreSQL95Dialect
 
   datasource:

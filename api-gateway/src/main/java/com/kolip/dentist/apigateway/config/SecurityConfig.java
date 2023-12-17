@@ -85,7 +85,7 @@ public class SecurityConfig {
 
         http.securityMatcher(
                 new MultiPathPatternWebExchangeMatcher("/login/oauth2/code/google", "/oauth2/authorization/google",
-                                                       "/api/token"));
+                                                       "/api/token", "/api/user", "/api/login"));
         http.csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .cors(corsSpec -> corsSpec.configurationSource(new CorsConfigurationSource() {
                     @Override
@@ -102,6 +102,7 @@ public class SecurityConfig {
                 }));
         http.authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec.pathMatchers("/api/token").permitAll())
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec.pathMatchers("api/token").permitAll())
+                .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec.pathMatchers("api/login").permitAll())
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec.pathMatchers("logout").permitAll())
                 .authorizeExchange(
                         authorizeExchangeSpec -> authorizeExchangeSpec.pathMatchers(HttpMethod.POST, "/api/user")
