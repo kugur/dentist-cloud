@@ -84,8 +84,11 @@ public class SecurityConfig {
     SecurityWebFilterChain publicHttpSecurityFilterChain(ServerHttpSecurity http) {
 
         http.securityMatcher(
-                new MultiPathPatternWebExchangeMatcher("/login/oauth2/code/google", "/oauth2/authorization/google",
-                                                       "/api/token", "/api/user", "/api/login"));
+                new MultiPathPatternWebExchangeMatcher(List.of(new MultiPathPatternWebExchangeMatcher.Pair("/login/oauth2/code/google"),
+                                                               new MultiPathPatternWebExchangeMatcher.Pair( "/oauth2/authorization/google"),
+                                                               new MultiPathPatternWebExchangeMatcher.Pair("/api/token"),
+                                                               new MultiPathPatternWebExchangeMatcher.Pair(HttpMethod.POST, "/api/user"),
+                                                               new MultiPathPatternWebExchangeMatcher.Pair( "/api/login"))));
         http.csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .cors(corsSpec -> corsSpec.configurationSource(new CorsConfigurationSource() {
                     @Override

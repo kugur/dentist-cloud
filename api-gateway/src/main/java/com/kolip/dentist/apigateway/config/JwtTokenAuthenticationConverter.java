@@ -20,7 +20,8 @@ import java.util.regex.Pattern;
 
 /**
  * Created by ugur.kolip on 30/11/2023.
- * Converter that taken Authorization token from cookie and convert.
+ * Converter that is used to take Authorization token from cookie and convert.
+ * At default, spring security try to find the token on request header.
  */
 public class JwtTokenAuthenticationConverter implements ServerAuthenticationConverter {
     private String bearerTokenHeaderName = HttpHeaders.AUTHORIZATION;

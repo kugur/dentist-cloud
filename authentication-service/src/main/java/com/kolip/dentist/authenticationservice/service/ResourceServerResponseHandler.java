@@ -54,7 +54,7 @@ public class ResourceServerResponseHandler implements AuthenticationSuccessHandl
         tokenCookie.setPath("/");
 
         response.addCookie(tokenCookie);
-        response.sendRedirect("http://localhost:3000/");
+        response.sendRedirect("http://localhost:3000/successfulLogin");
     }
 
     private String getEmail(Authentication auth2AuthenticationToken) {
@@ -76,6 +76,7 @@ public class ResourceServerResponseHandler implements AuthenticationSuccessHandl
 
         } else {
             simpleAuthentication.setName(user.getUsername());
+            simpleAuthentication.setAuthorities(user.getAuthorities());
         }
 
         return simpleAuthentication;

@@ -40,7 +40,7 @@ public class SecurityFilterConfig {
                 .sessionManagement(sessionManagmentConfig -> sessionManagmentConfig.sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
-                        reqMatcherReq -> reqMatcherReq.requestMatchers(HttpMethod.POST, "/api/user").permitAll())
+                        reqMatcherReq -> reqMatcherReq.requestMatchers("/api/user").permitAll())
                 .authorizeHttpRequests(
                         reqMatcherReq -> reqMatcherReq.requestMatchers("/login/oauth2/code/google").permitAll())
                 .authorizeHttpRequests(

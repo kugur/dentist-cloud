@@ -1,5 +1,6 @@
 package com.kolip.dentist.apigateway.config;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.http.server.PathContainer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher;
@@ -13,21 +14,38 @@ import java.util.List;
  * Let to add multiple url to match for using on security filter.
  */
 public class MultiPathPatternWebExchangeMatcher implements ServerWebExchangeMatcher {
-    private final List<String> patternList;
+    private final List<Pair> patternList;
 
-    public MultiPathPatternWebExchangeMatcher(String... pattern) {
-        this.patternList = List.of(pattern);
+    public MultiPathPatternWebExchangeMatcher(List<Pair> patternList) {
+        this.patternList = patternList;
     }
+
 
     @Override
     public Mono<MatchResult> matches(ServerWebExchange exchange) {
         ServerHttpRequest request = exchange.getRequest();
         PathContainer path = request.getPath().pathWithinApplication();
 
-        boolean match = this.patternList.stream().anyMatch(pattern -> pattern.equals(path.value()));
+        boolean match = this.patternList.stream()
+                .anyMatch(pattern -> pattern.path.equals(path.value()) &&
+                        (pattern.method == null || pattern.method == request.getMethod()));
         if (!match) {
             return MatchResult.notMatch();
         }
         return MatchResult.match();
+    }
+
+    public static class Pair {
+        public HttpMethod method;
+        public String path;
+
+        public Pair(HttpMethod method, String path) {
+            this.method = method;
+            this.path = path;
+        }
+        public Pair(String path) {
+            this.path = path;
+        }
+
     }
 }
