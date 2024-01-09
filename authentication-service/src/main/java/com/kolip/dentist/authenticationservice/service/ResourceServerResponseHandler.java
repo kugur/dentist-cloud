@@ -70,7 +70,7 @@ public class ResourceServerResponseHandler implements AuthenticationSuccessHandl
 
         if (user == null) {
             UserRequest signUpUserWithSocialLogin = UserRequest.builder().email(email).username(email).build();
-            UserResponse createdUser = userService.create(signUpUserWithSocialLogin, false, Roles.USER);
+            UserResponse createdUser = userService.create(signUpUserWithSocialLogin, false, Roles.PRE_USER);
             simpleAuthentication.setName(createdUser.getEmail());
             simpleAuthentication.setAuthorities(createdUser.getAuthorities());
 
