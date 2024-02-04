@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: dentist-service
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: dentist
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQL95Dialect
+
+  datasource:
+    url: jdbc:postgresql://localhost:32768/dentist?currentSchema=public
+    username: postgres
+    password: postgrespw
+
+eureka:
+  client:
+  serviceUrl:
+    defaultZone: http://localhost:8761/eureka
+
+
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'

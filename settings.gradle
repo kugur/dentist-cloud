@@ -3,4 +3,5 @@ include 'discovery-server'
 include 'patient-service'
 include 'api-gateway'
 include 'authentication-service'
+include 'dentist-service'
 
