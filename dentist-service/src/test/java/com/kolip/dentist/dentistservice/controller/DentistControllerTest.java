@@ -3,6 +3,7 @@ package com.kolip.dentist.dentistservice.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kolip.dentist.dentistservice.constants.DentalSpecialization;
 import com.kolip.dentist.dentistservice.dto.DentistRequest;
+import com.kolip.dentist.dentistservice.exceptions.InvalidRequestException;
 import com.kolip.dentist.dentistservice.models.Dentist;
 import com.kolip.dentist.dentistservice.service.DentistService;
 import com.kolip.dentistservice.basetest.AbstractTest;
@@ -16,16 +17,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.sql.Date;
 
-
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(classes = {DentistController.class})
 class DentistControllerTest extends AbstractTest {
     private MockMvc mockMvc;
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -51,6 +49,18 @@ class DentistControllerTest extends AbstractTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(dentistId))
                 .andExpect(jsonPath("$.email").value(signUpRequest.getEmail()));
+    }
+
+    @Test
+    public void createDentist_WhenDentistServiceThrowException_ShouldReturnBadRequest() throws Exception {
+        //Initialize Test
+        DentistRequest signUpRequest = generateDentistRequest();
+        String requestBody = objectMapper.writeValueAsString(signUpRequest);
+        when(dentistService.create(any())).thenThrow(new InvalidRequestException("Invalid Request"));
+
+        //Run, Verify Result
+        mockMvc.perform(post("/api/dentist").content(requestBody).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 
     private DentistRequest generateDentistRequest() {
